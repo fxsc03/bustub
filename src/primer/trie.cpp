@@ -6,7 +6,37 @@ namespace bustub {
 
 template <class T>
 auto Trie::Get(std::string_view key) const -> const T * {
-  throw NotImplementedException("Trie::Get is not implemented.");
+
+
+  // throw NotImplementedException("Trie::Get is not implemented.");
+
+  if(root_ == nullptr) {
+    return nullptr;
+  }
+
+  auto curr = root_;
+
+  // 走key树，找到所需的位置
+  for(size_t i = 0;i < key.size(); i++) {
+    // std::map<char, std::shared_ptr<const TrieNode>> children_;
+    // 在map中,每个元素是一个std::pair<const Key, Value>
+    // 定义一个迭代器来使用find找map中的值,children_是一个map容器,一层找一个key
+    auto it = curr->children_.find(key[i]);
+    if(it == curr->children_.end()) {
+        // 如果没找到直接返回空指针
+        return nullptr;
+    }
+    curr = it->second;
+  }
+
+  //在找到对应的节点后，使用dynamic_cast看看它是不是存有value
+  auto node_with_value = dynamic_cast<const TrieNodeWithValue<T> *>(curr.get());
+  if(node_with_value == nullptr) {
+    return nullptr;
+  }
+
+  return node_with_value->value_.get();
+
 
   // You should walk through the trie to find the node corresponding to the key. If the node doesn't exist, return
   // nullptr. After you find the node, you should use `dynamic_cast` to cast it to `const TrieNodeWithValue<T> *`. If
