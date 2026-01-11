@@ -41,6 +41,7 @@ class MoveBlocked {
 };
 
 // A TrieNode is a node in a Trie.
+// 不含value的普通节点
 class TrieNode {
  public:
   // Create a TrieNode with no children.
@@ -94,7 +95,7 @@ class TrieNodeWithValue : public TrieNode {
 
   // 这里是有值的节点
   // The value associated with this trie node.
-  std::shared_ptr<T> value_;
+  std::shared_ptr<T> value_; 
 };
 
 // A Trie is a data structure that maps strings to values of type T. All operations on a Trie should not
@@ -105,6 +106,7 @@ class Trie {
   // trie树的根节点
   // The root of the trie.
   std::shared_ptr<const TrieNode> root_{nullptr};
+  // 这里root被const，因此无法修改值，每次需要重新建树
 
   // Create a new trie with the given root.
   explicit Trie(std::shared_ptr<const TrieNode> root) : root_(std::move(root)) {}

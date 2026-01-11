@@ -12,6 +12,20 @@
 
 namespace bustub {
 
+
+// TEST(TrieTest, MyCustomTest) {
+//   auto trie = Trie();
+  
+//   // 你的测试代码
+//   trie = trie.Put<uint32_t>("mykey", 123);
+//   ASSERT_NE(*trie.Get<uint32_t>("mykey"), nullptr);
+//   ASSERT_EQ(*trie.Get<uint32_t>("mykey"), 123);
+  
+//   // 测试输出
+//   std::cout << " 我的测试成功！" << std::endl;
+
+// }
+
 TEST(TrieTest, ConstructorTest) { auto trie = Trie(); }
 
 TEST(TrieTest, BasicPutTest) {
@@ -47,7 +61,7 @@ TEST(TrieTest, PutGetOnePath) {
   trie = trie.Put<uint32_t>("1111", 1111);
   trie = trie.Put<uint32_t>("11", 22);
   ASSERT_EQ(*trie.Get<uint32_t>("11"), 22);
-  ASSERT_EQ(*trie.Get<uint32_t>("111"), 111);
+  ASSERT_EQ(*trie.Get<uint32_t>("111"), 111); // done
   ASSERT_EQ(*trie.Get<uint32_t>("1111"), 1111);
 }
 
@@ -61,7 +75,7 @@ TEST(TrieTest, BasicRemoveTest1) {
   trie = trie.Put<uint32_t>("tes", 233);
   ASSERT_EQ(*trie.Get<uint32_t>("tes"), 233);
   // Delete something
-  trie = trie.Remove("test");
+  trie = trie.Remove("test");// 这个地方有问题
   trie = trie.Remove("tes");
   trie = trie.Remove("te");
 
@@ -113,8 +127,8 @@ TEST(TrieTest, CopyOnWriteTest1) {
   ASSERT_EQ(*trie3.Get<uint32_t>("tes"), 233);
   ASSERT_EQ(*trie3.Get<uint32_t>("test"), 2333);
 
-  ASSERT_EQ(trie4.Get<uint32_t>("te"), nullptr);
-  ASSERT_EQ(*trie4.Get<uint32_t>("tes"), 233);
+  ASSERT_EQ(trie4.Get<uint32_t>("te"), nullptr);// remove写错了
+  ASSERT_EQ(*trie4.Get<uint32_t>("tes"), 233);// 这里有问题
   ASSERT_EQ(*trie4.Get<uint32_t>("test"), 2333);
 
   ASSERT_EQ(*trie5.Get<uint32_t>("te"), 23);
